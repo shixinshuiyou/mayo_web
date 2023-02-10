@@ -3,6 +3,7 @@ module mayo_web
 go 1.19
 
 require (
+	github.com/gin-contrib/pprof v1.4.0
 	github.com/gin-gonic/gin v1.8.2
 	github.com/go-ini/ini v1.67.0
 	github.com/shixinshuiyou/framework v0.0.0-20230130093147-51bb86775002

@@ -1,6 +1,7 @@
 package router
 
 import (
+	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"mayo_web/pkg/db"
 	"mayo_web/pkg/middleware"
@@ -8,6 +9,8 @@ import (
 )
 
 func InitRouter(engine *gin.Engine) {
+
+	pprof.Register(engine)
 	// 数据库初始化和链路追踪
 	engine.Use(db.InitDbMiddleware)
 
