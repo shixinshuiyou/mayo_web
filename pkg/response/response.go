@@ -13,6 +13,7 @@ type RespStruct struct {
 
 func SuccessResponse(ctx *gin.Context, data interface{}) {
 	Response(ctx, http.StatusOK, SUCCESS, data)
+	return
 }
 
 func FailedResponse(ctx *gin.Context, err error) {

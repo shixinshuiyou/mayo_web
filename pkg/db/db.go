@@ -17,4 +17,5 @@ func InitDbMiddleware(ctx *gin.Context) {
 	}
 	BaseDB = db.WithContext(ctx.Request.Context())
 	database.AddGormCallbacks(BaseDB, appconf.AppConf.Name)
+	ctx.Next()
 }

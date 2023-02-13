@@ -4,43 +4,33 @@ var serviceTemplate = `
 package service
 
 import (
-	"mayo/repository"
+	"mayo_web/dao"
 )
 
-type  I{{class}}Service interface {
-}
-
 type {{class}}Service struct {
-	*BaseService
-	{{obj}}Repository    repository.I{{class}}Repository
+	{{obj}}Dao    dao.{{class}}Dao
 }
 
-func New{{class}}Service(option ...Option) *{{class}}Service {
-	return &{{class}}Service{BaseService:NewByOption(option...)}
+func New{{class}}Service() *{{class}}Service {
+	return &{{class}}Service{}
 }
 
-func  ({{obj}}Service *{{class}}Service)Set{{class}}Repository(repository repository.I{{class}}Repository){
-	{{obj}}Service.{{obj}}Repository = repository
-}
-
-func ({{obj}}Service *{{class}}Service) Init() {
-	options := []repository.Option{repository.WithContext({{obj}}Service.ctx), repository.WithLog({{obj}}Service.log)}
-	{{obj}}Repository := repository.New{{class}}Repository(options...)
-	{{obj}}Service.Set{{class}}Repository({{obj}}Repository)
-}
-
+// 展示
 func ({{obj}}Service *{{class}}Service) Detail() {
 
 }
 
+// 删除
 func ({{obj}}Service *{{class}}Service) Delete(id int) bool {
 	return false
 }
 
+// 列表
 func ({{obj}}Service *{{class}}Service) List() {
 
 }
 
+// 更新
 func ({{obj}}Service *{{class}}Service) Update(id int) {
 
 }

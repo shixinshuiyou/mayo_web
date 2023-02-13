@@ -9,7 +9,7 @@ type MayoUser struct {
 	UserName string `gorm:"column:user_name" json:"userName"`
 }
 
-func (user *MayoUser) TableName() string {
+func (this *MayoUser) TableName() string {
 	return "mayo_user"
 }
 

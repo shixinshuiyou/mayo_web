@@ -1,17 +1,17 @@
 package middleware
 
 import (
+	"errors"
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"mayo_web/pkg/response"
 )
 
 const cookieTag = "mayo"
 
 func LoginMiddleware(ctx *gin.Context) {
 	mvCookie, err := ctx.Cookie(cookieTag)
-	// TODO 登录鉴权（可用redis换成一个随机字符串UUID）
 	if err != nil || mvCookie != "MTY3NTY2Mzg0NXxOd3dBTkZwTlNUVlR" {
-		ctx.JSONP(http.StatusOK, "")
+		response.FailedResponse(ctx, errors.New("请先登录"))
 		return
 	}
 	ctx.Next()

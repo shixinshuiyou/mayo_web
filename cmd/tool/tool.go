@@ -18,8 +18,7 @@ func main() {
 		return
 	}
 	tool.GenModel(table, dbType)
-	//tool.GenRepository(table)
-	if srv {
-		tool.GenService(table)
-	}
+	tool.GenRepository(table)
+	tool.GenService(table)
+
 }

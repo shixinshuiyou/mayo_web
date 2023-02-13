@@ -1,16 +1,15 @@
 package tool
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/alexkappa/mustache"
 	"mayo_web/pkg/appconf"
 	"os"
-	"strconv"
 	"strings"
 )
 
 func GenModel(table string, dbType string) {
+
 	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
 		appconf.DbConf.User,
 		appconf.DbConf.Password,
@@ -23,6 +22,9 @@ func GenModel(table string, dbType string) {
 	//		appconf.DbLogSetting.Host,
 	//		appconf.DbLogSetting.Name)
 	//}
+
+	path := "./models"
+	isNotExistMkDir(path)
 
 	t2t := NewTable2Struct()
 	t2t.EnableJsonTag(true)
@@ -52,25 +54,27 @@ func GenModel(table string, dbType string) {
 		// 是否添加结构体方法获取表名
 		RealNameMethod("TableName").
 		// 生成的结构体保存路径
-		SavePath("./models/" + table + ".go").
+		SavePath(path + "/" + table + ".go").
 		// 数据库dsn,这里可以使用 t2t.DB() 代替,参数为 *sql.DB 对象
 		Dsn(dsn).
 		// 执行
 		Run()
 }
+
 func GenRepository(table string) {
 	class := camelCase(table)
 	obj := upperCamelCase(table)
 
 	template := mustache.New()
 
-	template.Parse(strings.NewReader(repositoryTemplate))
+	template.Parse(strings.NewReader(daoTemplate))
 	tmp, _ := template.RenderString(map[string]string{
 		"class": class,
 		"obj":   obj,
 	})
-	println(tmp)
-	filePath := fmt.Sprintf("%s", "./repository/"+table+"_repository.go")
+	path := "./dao"
+	isNotExistMkDir(path)
+	filePath := fmt.Sprintf("%s", path+"/"+table+"_dao.go")
 	f, err := os.Create(filePath)
 	if err != nil {
 		return
@@ -79,6 +83,7 @@ func GenRepository(table string) {
 
 	f.WriteString(tmp)
 }
+
 func GenService(table string) {
 	class := camelCase(table)
 	obj := upperCamelCase(table)
@@ -89,8 +94,9 @@ func GenService(table string) {
 		"class": class,
 		"obj":   obj,
 	})
-	println(tmp)
-	filePath := fmt.Sprintf("%s", "./service/"+table+"_service.go")
+	path := "./service"
+	isNotExistMkDir(path)
+	filePath := fmt.Sprintf("%s", path+"/"+table+"_service.go")
 	f, err := os.Create(filePath)
 	if err != nil {
 		return
@@ -131,71 +137,12 @@ func upperCamelCase(str string) string {
 	return text
 }
 
-func StrvalToString(value interface{}) string {
-	// interface 转 string
-	var key string
-	if value == nil {
-		return key
-	}
-
-	switch value.(type) {
-	case float64:
-		ft := value.(float64)
-		key = strconv.FormatFloat(ft, 'f', -1, 64)
-	case float32:
-		ft := value.(float32)
-		key = strconv.FormatFloat(float64(ft), 'f', -1, 64)
-	case int:
-		it := value.(int)
-		key = strconv.Itoa(it)
-	case uint:
-		it := value.(uint)
-		key = strconv.Itoa(int(it))
-	case int8:
-		it := value.(int8)
-		key = strconv.Itoa(int(it))
-	case uint8:
-		it := value.(uint8)
-		key = strconv.Itoa(int(it))
-	case int16:
-		it := value.(int16)
-		key = strconv.Itoa(int(it))
-	case uint16:
-		it := value.(uint16)
-		key = strconv.Itoa(int(it))
-	case int32:
-		it := value.(int32)
-		key = strconv.Itoa(int(it))
-	case uint32:
-		it := value.(uint32)
-		key = strconv.Itoa(int(it))
-	case int64:
-		it := value.(int64)
-		key = strconv.FormatInt(it, 10)
-	case uint64:
-		it := value.(uint64)
-		key = strconv.FormatUint(it, 10)
-	case string:
-		key = value.(string)
-	case []byte:
-		key = string(value.([]byte))
-	default:
-		newValue, _ := json.Marshal(value)
-		key = string(newValue)
-	}
-
-	return key
-}
-
-func MergeArrayUnique(arrays ...[]string) (res []string) {
-	temp := make(map[string]int)
-	for _, array := range arrays {
-		for _, arr := range array {
-			temp[arr] = 1
+func isNotExistMkDir(path string) {
+	_, err := os.Stat(path)
+	if os.IsNotExist(err) {
+		err = os.MkdirAll(path, os.ModePerm)
+		if err != nil {
+			panic(err)
 		}
 	}
-	for k, _ := range temp {
-		res = append(res, k)
-	}
-	return
 }
