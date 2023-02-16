@@ -3,15 +3,16 @@ module mayo_web
 go 1.19
 
 require (
-	github.com/gin-contrib/pprof v1.4.0
+	github.com/alexkappa/mustache v0.0.0-20191113130723-8bb9cfca2bfa
 	github.com/gin-gonic/gin v1.8.2
 	github.com/go-ini/ini v1.67.0
+	github.com/go-sql-driver/mysql v1.7.0
 	github.com/shixinshuiyou/framework v0.0.0-20230130093147-51bb86775002
+	github.com/sirupsen/logrus v1.9.0
 	gorm.io/gorm v1.24.3
 )
 
 require (
-	github.com/alexkappa/mustache v0.0.0-20191113130723-8bb9cfca2bfa // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
@@ -20,7 +21,6 @@ require (
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.1 // indirect
-	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/goccy/go-json v0.9.11 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
@@ -37,7 +37,6 @@ require (
 	github.com/prometheus/client_model v0.3.0 // indirect
 	github.com/prometheus/common v0.37.0 // indirect
 	github.com/prometheus/procfs v0.8.0 // indirect
-	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	github.com/ztrue/tracerr v0.3.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.37.0 // indirect
