@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/shixinshuiyou/framework/log"
 	"github.com/shixinshuiyou/framework/trace"
 	"github.com/shixinshuiyou/framework/web/server"
 	"github.com/sirupsen/logrus"
@@ -23,6 +24,11 @@ func main() {
 		StatusSrvConf: server.WebServerConfig{
 			Host: appconf.AppConf.StatusHost,
 			Port: appconf.AppConf.StatusPort,
+		},
+		LogConf: log.Config{
+			ServerTag:   "",
+			Level:       logrus.DebugLevel,
+			GrayLogConf: nil,
 		},
 		TraceConf: trace.Config{
 			Host:        appconf.TraceConf.Host,

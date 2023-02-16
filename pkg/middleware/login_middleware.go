@@ -9,6 +9,7 @@ import (
 const cookieTag = "mayo"
 
 func LoginMiddleware(ctx *gin.Context) {
+	ctx.Request.Form.Get("")
 	mvCookie, err := ctx.Cookie(cookieTag)
 	if err != nil || mvCookie != "MTY3NTY2Mzg0NXxOd3dBTkZwTlNUVlR" {
 		response.FailedResponse(ctx, errors.New("请先登录"))
