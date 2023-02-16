@@ -1,8 +1,10 @@
 package main
 
 import (
+	"github.com/shixinshuiyou/framework/log"
 	"github.com/shixinshuiyou/framework/trace"
 	"github.com/shixinshuiyou/framework/web/server"
+	"github.com/sirupsen/logrus"
 	"mayo_web/pkg/appconf"
 	"mayo_web/router"
 	"time"
@@ -16,12 +18,17 @@ func main() {
 		MainSrvConf: server.WebServerConfig{
 			Host:         appconf.AppConf.MainHost,
 			Port:         appconf.AppConf.MainPort,
-			ReadTimeout:  time.Duration(appconf.AppConf.ReadTimeout),
-			WriteTimeout: time.Duration(appconf.AppConf.WriteTimeout),
+			ReadTimeout:  120 * time.Second,
+			WriteTimeout: 120 * time.Second,
 		},
 		StatusSrvConf: server.WebServerConfig{
 			Host: appconf.AppConf.StatusHost,
 			Port: appconf.AppConf.StatusPort,
+		},
+		LogConf: log.Config{
+			ServerTag:   "",
+			Level:       logrus.DebugLevel,
+			GrayLogConf: nil,
 		},
 		TraceConf: trace.Config{
 			Host:        appconf.TraceConf.Host,
@@ -31,6 +38,7 @@ func main() {
 		},
 	}
 
+	logrus.Infof("%v", config)
 	server := server.NewServer(config)
 	server.SetMainRouterFunc(router.InitRouter)
 

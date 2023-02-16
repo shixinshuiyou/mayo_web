@@ -5,14 +5,12 @@ import (
 )
 
 type App struct {
-	Name         string
-	LogLevel     int
-	MainHost     string
-	MainPort     int64
-	StatusHost   string
-	StatusPort   int64
-	ReadTimeout  int64
-	WriteTimeout int64
+	Name       string
+	LogLevel   int
+	MainHost   string
+	MainPort   int64
+	StatusHost string
+	StatusPort int64
 }
 
 func GetEnv() string {

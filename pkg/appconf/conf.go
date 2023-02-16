@@ -29,6 +29,10 @@ func init() {
 
 	_, err = os.Stat(configPath)
 	if os.IsNotExist(err) {
+		configPath = GetGoPath() + "/src/mayo_web/conf/dev/app.ini"
+	}
+	_, err = os.Stat(configPath)
+	if os.IsNotExist(err) {
 		log.Fatalf(" configPath %s not find ", configPath)
 	}
 
