@@ -7,5 +7,5 @@ func TestGenModel(t *testing.T) {
 }
 
 func TestGenRepository(t *testing.T) {
-	GenRepository("mayo_user")
+	GenDao("mayo_user")
 }

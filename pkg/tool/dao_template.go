@@ -4,8 +4,9 @@ var daoTemplate = `
 package dao
 
 import (
-	"mayo_web/models"
+	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
+	"mayo_web/models"
 )
 
 type {{class}}Dao struct {
@@ -23,7 +24,7 @@ func ({{obj}}Dao *{{class}}Dao)GetByID(id int)({{obj}} *models.{{class}}, err er
 	return
 }
    
-func ({{obj}}Dao *{{class}}Dao)AddOrEdit({{obj}} *models.{{class}})(err error)  {
+func ({{obj}}Dao *{{class}}Dao)Add({{obj}} *models.{{class}})(err error)  {
 	err = {{obj}}Dao.db.Omit(clause.Associations).Create(&{{obj}}).Error
 	return
 }

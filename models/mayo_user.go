@@ -2,11 +2,16 @@ package models
 
 import (
 	"gorm.io/gorm"
+	"time"
 )
 
 type MayoUser struct {
-	Id       int    `gorm:"column:id" json:"id"`
-	UserName string `gorm:"column:user_name" json:"userName"`
+	Id         int       `gorm:"column:id" json:"id"`
+	Username   string    `gorm:"column:username" json:"username"`
+	Password   string    `gorm:"column:password" json:"password"`
+	Isable     int       `gorm:"column:isable" json:"isable"` // 0-失效
+	CreateTime time.Time `gorm:"column:create_time" json:"createTime"`
+	UpdateTime time.Time `gorm:"column:update_time" json:"updateTime"`
 }
 
 func (this *MayoUser) TableName() string {

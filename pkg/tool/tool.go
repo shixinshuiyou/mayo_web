@@ -61,7 +61,7 @@ func GenModel(table string, dbType string) {
 		Run()
 }
 
-func GenRepository(table string) {
+func GenDao(table string) {
 	class := camelCase(table)
 	obj := upperCamelCase(table)
 

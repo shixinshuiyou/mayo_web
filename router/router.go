@@ -3,6 +3,7 @@ package router
 import (
 	//"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
+	"mayo_web/controller/user"
 	"mayo_web/pkg/db"
 	"mayo_web/pkg/middleware"
 	"mayo_web/pkg/response"
@@ -16,15 +17,12 @@ func InitRouter(engine *gin.Engine) {
 	engine.Use(db.InitDbMiddleware)
 
 	userGroup := engine.Group("/user", middleware.LoginMiddleware)
-	userGroup.GET("/test1", func(c *gin.Context) {
-		var name string
-		db.BaseDB.Table("advertiser").Raw("select user_name from mayo_user where id = ?", 1).First(&name)
-		response.SuccessResponse(c, name)
-	})
-	userGroup.GET("/test2", func(c *gin.Context) {
+	userGroup.GET("/detail", user.DetailController)
+
+	engine.GET("/health", func(c *gin.Context) {
 		response.SuccessResponse(c, map[string]interface{}{
 			"code": 0,
-			"mes":  "hello tt",
+			"mes":  "hello boy",
 		})
 	})
 

@@ -18,7 +18,7 @@ func main() {
 		return
 	}
 	tool.GenModel(table, dbType)
-	tool.GenRepository(table)
+	tool.GenDao(table)
 	tool.GenService(table)
 
 }
